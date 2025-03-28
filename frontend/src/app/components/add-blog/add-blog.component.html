@@ -1,0 +1,19 @@
+<div class="container mt-4">
+    <h2>Add New Blog</h2>
+    <form (submit)="submitPost()">
+      <div class="mb-3">
+        <label class="form-label">Title</label>
+        <input type="text" class="form-control" [(ngModel)]="newPost.title" name="title" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Author</label>
+        <input type="text" class="form-control" [(ngModel)]="newPost.author" name="author" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Content</label>
+        <textarea class="form-control" [(ngModel)]="newPost.content" name="content" rows="4" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+  </div>
+  
