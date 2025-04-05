@@ -1,19 +1,33 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms'; // ✅ Import FormsModule
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { BlogService, BlogPost } from '../../services/blog.service';
 
 @Component({
   selector: 'app-add-blog',
-  standalone: true, // ✅ Standalone component
+  standalone: true,
   templateUrl: './add-blog.component.html',
   styleUrls: ['./add-blog.component.css'],
-  imports: [FormsModule] // ✅ Import FormsModule
+  imports: [FormsModule, CommonModule],
 })
 export class AddBlogComponent {
-  newPost = { title: '', author: '', content: '' };
+  newPost: BlogPost = { title: '', author: '', content: '' };
+  message = '';
 
-  // ✅ Add this method
+  constructor(private blogService: BlogService) {
+    console.log('✅ AddBlogComponent loaded!');
+  }
+
   submitPost() {
-    console.log('New Post Submitted:', this.newPost);
-    // You can add logic to save the post here
+    this.blogService.addBlog(this.newPost).subscribe({
+      next: (res) => {
+        this.message = res.message;
+        this.newPost = { title: '', author: '', content: '' }; // reset form
+      },
+      error: (err) => {
+        console.error(err);
+        this.message = 'Failed to submit blog.';
+      },
+    });
   }
 }

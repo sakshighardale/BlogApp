@@ -1,24 +1,30 @@
-const app = require("./app"); // Import the Express app
-const PORT = process.env.PORT || 5000; // Set the port to either environment variable or 5000
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const bodyParser = require("body-parser");
 
-// Start server
+const authRoutes = require("./routes/auth");
+const blogRoutes = require("./routes/blogs");
+
+const app = express();
+const PORT = 3000;
+
+app.use(cors());
+app.use(bodyParser.json());
+
+// MongoDB
+mongoose
+  .connect("mongodb://127.0.0.1:27017/blogDB", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("✅ MongoDB connected"))
+  .catch((err) => console.error("❌ MongoDB connection error:", err));
+
+// Routes
+app.use("/api/auth", authRoutes);
+app.use("/api/blogs", blogRoutes);
+
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
-
-// const express = require("express");
-// const app = express();
-
-// // Middleware
-// app.use(express.json()); // Body parser middleware
-
-// // Simple POST route
-// app.post("/test", (req, res) => {
-//   console.log("Request Body:", req.body); // Check body
-//   res.json({ message: "Received your data!" });
-// });
-
-// const PORT = process.env.PORT || 5000;
-// app.listen(PORT, () => {
-//   console.log(`Server running on http://localhost:${PORT}`);
-// });

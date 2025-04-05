@@ -1,0 +1,21 @@
+<div class="container mt-5">
+  <h2>Login</h2>
+  <form (ngSubmit)="onLogin()">
+    <input
+      class="form-control my-2"
+      [(ngModel)]="user.email"
+      name="email"
+      placeholder="Email"
+      required
+    />
+    <input
+      class="form-control my-2"
+      [(ngModel)]="user.password"
+      name="password"
+      type="password"
+      placeholder="Password"
+      required
+    />
+    <button class="btn btn-success mt-2" type="submit">Login</button>
+  </form>
+</div>
